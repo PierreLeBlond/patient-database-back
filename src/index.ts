@@ -26,7 +26,7 @@ app.use((_, response, next) => {
   next();
 });
 
-app.get('/patient/:id', (request, response, next) => {
+app.get('/patient-database/patient/:id', (request, response, next) => {
   client.get({
     index: 'patients',
     id: request.params.id,
@@ -34,7 +34,7 @@ app.get('/patient/:id', (request, response, next) => {
     .then((res) => response.send((res as GetResponse)._source));
 });
 
-app.delete('/patient/:id', (request, response, next) => {
+app.delete('/patient-database/patient/:id', (request, response, next) => {
   client.delete({
     index: 'patients',
     id: request.params.id,
@@ -43,7 +43,7 @@ app.delete('/patient/:id', (request, response, next) => {
     .then(() => response.send({ success: true }));
 })
 
-app.post('/patients', jsonParser, (request, response, next) => {
+app.post('/patient-database/patients', jsonParser, (request, response, next) => {
   const { firstName, lastName } = request.body;
 
   if (typeof firstName != "string") {
@@ -74,7 +74,7 @@ app.post('/patients', jsonParser, (request, response, next) => {
     .then(() => response.send({ success: true }));
 });
 
-app.get('/patients', async (request, response, next) => {
+app.get('/patient-database/patients', async (request, response, next) => {
   const { search } = request.query;
   const query: string = search as string || "";
   // https://stackoverflow.com/questions/51849598/elasticsearch-wild-card-query-not-working
