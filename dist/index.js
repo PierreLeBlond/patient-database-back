@@ -34,14 +34,41 @@ app.use((_, response, next) => {
     response.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     next();
 });
-app.get('/patient/:id', (request, response, next) => {
+app.get('/patient-database-back/patient/:id', (request, response, next) => {
     client.get({
         index: 'patients',
         id: request.params.id,
     }).catch((error) => next(error))
         .then((res) => response.send(res._source));
 });
-app.delete('/patient/:id', (request, response, next) => {
+app.post('/patient-database-back/patient/:id', jsonParser, (request, response, next) => {
+    const { firstName, lastName } = request.body;
+    if (typeof firstName != "string") {
+        throw new Error(`firstName '${firstName}' should be a string`);
+    }
+    if (typeof lastName != "string") {
+        throw new Error(`lastName '${lastName}' should be a string`);
+    }
+    const regex = /^[A-Za-z][A-Za-z -]+$/;
+    if (!firstName.match(regex)) {
+        throw new Error(`firstName '${firstName}' is not matching '${regex}'`);
+    }
+    if (!lastName.match(regex)) {
+        throw new Error(`lastName '${lastName}' is not matching '${regex}'`);
+    }
+    client.update({
+        index: 'patients',
+        id: request.params.id,
+        doc: {
+            firstName,
+            lastName
+        },
+        refresh: true // Not optimal : https://github.com/elastic/elasticsearch/issues/7761
+    })
+        .catch((error) => next(error))
+        .then(() => response.send({ success: true }));
+});
+app.delete('/patient-database-back/patient/:id', (request, response, next) => {
     client.delete({
         index: 'patients',
         id: request.params.id,
@@ -49,7 +76,7 @@ app.delete('/patient/:id', (request, response, next) => {
     }).catch((error) => next(error))
         .then(() => response.send({ success: true }));
 });
-app.post('/patients', jsonParser, (request, response, next) => {
+app.post('/patient-database-back/patients', jsonParser, (request, response, next) => {
     const { firstName, lastName } = request.body;
     if (typeof firstName != "string") {
         throw new Error(`firstName '${firstName}' should be a string`);
@@ -75,7 +102,7 @@ app.post('/patients', jsonParser, (request, response, next) => {
         .catch((error) => next(error))
         .then(() => response.send({ success: true }));
 });
-app.get('/patients', (request, response, next) => __awaiter(void 0, void 0, void 0, function* () {
+app.get('/patient-database-back/patients', (request, response, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { search } = request.query;
     const query = search || "";
     // https://stackoverflow.com/questions/51849598/elasticsearch-wild-card-query-not-working
