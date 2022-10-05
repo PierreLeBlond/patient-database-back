@@ -1,0 +1,123 @@
+{
+  "title": "Patient",
+  "type": "object",
+  "properties": {
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "file": {
+      "type": "number"
+    },
+    "aftercare": {
+      "type": "boolean",
+      "default": false
+    },
+    "firstname": {
+      "type": "string",
+      "maxLength": 64,
+      "pattern": "^[A-Za-z][A-Za-z -]*$"
+    },
+    "lastname": {
+      "type": "string",
+      "maxLength": 64,
+      "pattern": "^[A-Za-z][A-Za-z -]*$"
+    },
+    "gender": {
+      "type": "string",
+      "enum": [
+        "child",
+        "man",
+        "woman"
+      ],
+      "default": "child"
+    },
+    "year": {
+      "type": "number",
+      "default": 2022
+    },
+    "age": {
+      "type": "number",
+      "default": 0
+    },
+    "phone": {
+      "type": "string",
+      "maxLength": 64,
+      "default": ""
+    },
+    "other_ex": {
+      "type": "number",
+      "default": 0
+    },
+    "cataract": {
+      "type": "number",
+      "default": 0
+    },
+    "tear_treatment": {
+      "type": "number",
+      "default": 0
+    },
+    "glasses": {
+      "type": "number",
+      "default": 0
+    },
+    "ar": {
+      "type": "string",
+      "maxLength": 64,
+      "default": ""
+    },
+    "avod_sc": {
+      "type": "string",
+      "maxLength": 64,
+      "default": ""
+    },
+    "avog_sc": {
+      "type": "string",
+      "maxLength": 64,
+      "default": ""
+    },
+    "avod_ac": {
+      "type": "string",
+      "maxLength": 64,
+      "default": ""
+    },
+    "avog_ac": {
+      "type": "string",
+      "maxLength": 64,
+      "default": ""
+    },
+    "avodg_ac": {
+      "type": "string",
+      "maxLength": 64,
+      "default": ""
+    },
+    "laf": {
+      "type": "string",
+      "maxLength": 64,
+      "default": ""
+    },
+    "prescription": {
+      "type": "string",
+      "maxLength": 64,
+      "default": ""
+    },
+    "glasses_donation": {
+      "type": "boolean",
+      "default": false
+    },
+    "treatment": {
+      "type": "string",
+      "maxLength": 64,
+      "default": ""
+    },
+    "glasses_holder": {
+      "type": "boolean",
+      "default": false
+    },
+    "comment": {
+      "type": "string",
+      "maxLength": 3000,
+      "default": ""
+    }
+  }
+}

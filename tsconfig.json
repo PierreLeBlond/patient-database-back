@@ -6,13 +6,14 @@
     "rootDir": "./src",
     "strict": true,
     "moduleResolution": "node",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "resolveJsonModule": true
   },
   "files": [
     "src/index.ts"
   ],
   "include": [
-    "/**/*.ts"
+    "src/**/*.ts"
   ],
   "exclude": [
     "./node_modules"
