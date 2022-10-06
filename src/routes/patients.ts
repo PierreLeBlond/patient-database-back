@@ -7,8 +7,9 @@ import crypto from 'crypto';
 const patients = express.Router();
 
 patients.get('/', asyncHandler(async (req, res) => {
+  const search = (req.query.search as string)?.toLowerCase() ?? "";
   const { rows } = await db.query('SELECT * FROM patients ORDER BY date, file;');
-  const patients = rows.map((row: any) => {
+  const patients = rows.filter((row: any) => row.firstname.toLowerCase().includes(search) || row.lastname.toLowerCase().includes(search)).map((row: any) => {
     const { id } = row;
     delete row.id;
     return {
