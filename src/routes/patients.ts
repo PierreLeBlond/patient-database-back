@@ -43,7 +43,7 @@ patients.get('/:id', asyncHandler(async (req, res) => {
 
   // const patient = await Patient.findByPk(id, {
   // attributes: {
-  // exclude: ['id', 'createdAt', 'updatedAt']
+  // exclude: ['id']
   // }
   // }) as any;
 

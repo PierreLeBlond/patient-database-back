@@ -108,7 +108,8 @@ const Patient = sequelize.define('Patient', {
     allowNull: false
   }
 }, {
-  tableName: 'patients'
+  tableName: 'patients',
+  timestamps: false
 });
 
 export { Patient };
