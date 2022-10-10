@@ -31,7 +31,7 @@ patients.get('/', asyncHandler(async (req, res) => {
 patients.get('/:id', asyncHandler(async (req, res) => {
   const { id } = req.params;
 
-  const rows = await sequelize.query('SELECT * FROM (SELECT *, LAG(id) over (ORDER BY date, file) as previous_id, LEAD(id) over (ORDER BY date, file) as next_id FROM "Patients") AS t WHERE id = ?;', {
+  const rows = await sequelize.query('SELECT * FROM (SELECT *, LAG(id) over (ORDER BY date, file) as previous_id, LEAD(id) over (ORDER BY date, file) as next_id FROM patients) AS t WHERE id = ?;', {
     type: QueryTypes.SELECT,
     replacements: [id]
   });
