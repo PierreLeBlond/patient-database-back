@@ -1,17 +1,14 @@
 import dotenv from 'dotenv';
-import { Client, types } from 'pg';
+import { Sequelize } from 'sequelize';
 
 dotenv.config();
 
-types.setTypeParser(1082, function (stringValue) {
-  return stringValue;  //1082 for date type
+const sequelize = new Sequelize(`${process.env.DATABASE_URL}`, {
+  logging: false
 });
 
-const connectionString = process.env.DATABASE_URL;
-const db = new Client({ connectionString });
-
 const init = async () => {
-  await db.connect();
-}
+  await sequelize.authenticate();
+};
 
-export { db, init };
+export { sequelize, init };

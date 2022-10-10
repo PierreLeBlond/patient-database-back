@@ -1,0 +1,9 @@
+{
+  "title": "patients query",
+  "type": "object",
+  "optionalProperties": {
+    "aftercare": "boolean",
+    "glasses_donation": "boolean",
+    "glasses_holder": "boolean"
+  }
+}

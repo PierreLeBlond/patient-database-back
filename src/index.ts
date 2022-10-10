@@ -1,10 +1,12 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import { patients } from './routes/patients';
+import { stats } from './routes/stats';
 import { users } from './routes/users';
 import { login } from './routes/login';
 import { init } from './config/db';
 import { authenticate } from './controllers/authenticate';
+import { Patient } from './models/Patient';
 
 dotenv.config();
 
@@ -19,8 +21,10 @@ app.use((_, res, next) => {
   next();
 });
 
-init().then(() => {
+init().then(async () => {
   console.log('Connected to db!');
+
+  await Patient.sync();
 
   app.use('/login', login)
 
@@ -28,6 +32,7 @@ init().then(() => {
 
   app.use('/users', users)
   app.use('/patients', patients)
+  app.use('/stats', stats)
 
   app.listen(port)
 }).catch((err) => {

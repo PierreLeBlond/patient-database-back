@@ -1,8 +1,9 @@
 import express from 'express';
 import asyncHandler from 'express-async-handler';
-import { db } from '../config/db';
+import { sequelize } from '../config/db';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { QueryTypes } from 'sequelize';
 
 const login = express.Router();
 
@@ -13,8 +14,11 @@ const generateAccessToken = (username: string) => {
 login.post('/', asyncHandler(async (req, res) => {
   const { username, password } = req.body;
 
-  const { rows } = await db.query(`SELECT * FROM users WHERE username = $1;`, [username]);
-  const user = rows[0];
+  const rows = await sequelize.query(`SELECT * FROM users WHERE username = ?;`, {
+    type: QueryTypes.SELECT,
+    replacements: [username]
+  });
+  const user = rows[0] as any;
 
   if (!user) {
     throw new Error('Incorrect username or password')
