@@ -15,6 +15,7 @@ const port = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use((_, res, next) => {
+  // TODO Allow only from front site
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
@@ -23,8 +24,6 @@ app.use((_, res, next) => {
 
 init().then(async () => {
   console.log('Connected to db!');
-
-  await Patient.sync();
 
   app.use('/login', login)
 

@@ -43,6 +43,14 @@ const Patient = sequelize.define('Patient', {
     type: DataTypes.STRING,
     allowNull: false
   },
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  adress: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
   other_ex: {
     type: DataTypes.INTEGER,
     allowNull: false
@@ -112,4 +120,37 @@ const Patient = sequelize.define('Patient', {
   timestamps: false
 });
 
-export { Patient };
+const Act = sequelize.define('Act', {
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true
+  },
+  date: {
+    type: DataTypes.DATEONLY,
+    allowNull: false
+  },
+  comment: {
+    type: DataTypes.TEXT,
+    allowNull: false
+  }
+}, {
+  tableName: 'acts',
+  timestamps: false
+});
+
+Act.belongsTo(Patient, {
+  foreignKey: {
+    name: 'patient_id'
+  },
+  keyType: DataTypes.STRING,
+  as: 'acts'
+});
+Act.removeAttribute('PatientId');
+Patient.hasMany(Act, {
+  as: 'acts',
+  foreignKey: "patient_id",
+  onDelete: 'CASCADE'
+});
+
+export { Patient, Act };

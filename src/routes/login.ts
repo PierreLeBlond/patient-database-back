@@ -8,7 +8,7 @@ import { QueryTypes } from 'sequelize';
 const login = express.Router();
 
 const generateAccessToken = (username: string) => {
-  return jwt.sign({ username }, process.env.JWT_ACCESS_TOKEN as string, { expiresIn: '1h' });
+  return jwt.sign({ username }, process.env.JWT_ACCESS_TOKEN as string, { expiresIn: '12h' });
 };
 
 login.post('/', asyncHandler(async (req, res) => {
