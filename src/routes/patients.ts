@@ -14,7 +14,8 @@ patients.get('/', asyncHandler(async (req, res) => {
     order: [
       ["date", "ASC"],
       ["file", "ASC"]
-    ]
+    ],
+    include: 'acts'
   });
 
   const filteredPatients = patients.filter((row: any) => row.firstname.toLowerCase().includes(search) || row.lastname.toLowerCase().includes(search));
